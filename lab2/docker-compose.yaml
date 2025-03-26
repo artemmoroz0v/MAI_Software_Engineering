@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  user_service:
+    build:
+      context: ./user-service
+    ports:
+      - "8001:8001"
+    networks:
+      - app-file-storage-network
+
+  file_service:
+    build:
+      context: ./file-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user_service
+    networks:
+      - app-file-storage-network
+
+networks:
+  app-file-storage-network:
+    driver: bridge
