@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  user_service:
+    build:
+      context: ./user-service
+    ports:
+      - "8001:8001"
+    networks:
+      - app-network
+
+  file_service:
+    build:
+      context: ./file-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user_service
+    networks:
+      - app-network
+
+  database:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lab3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5435:5432"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
