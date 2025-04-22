@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pyjwt
+python-multipart
+passlib
+psycopg2-binary
+asyncpg
+bcrypt
